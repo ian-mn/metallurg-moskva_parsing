@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  
+  db:
+    image: postgres:14
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - parsing-network
+
+  parsers:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.parsers
+    env_file:
+      - ./.env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+    - parsing-network
+
+  api:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.api
+    ports:
+      - "${FASTAPI_PORT}:${FASTAPI_PORT}"
+    env_file:
+      - ./.env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+    - parsing-network
+
+networks:
+  parsing-network:

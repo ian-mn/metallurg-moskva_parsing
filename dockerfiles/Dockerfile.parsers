@@ -1,0 +1,13 @@
+FROM python:3.11.3-slim-bullseye
+
+RUN apt-get update \
+    && apt-get install -y cron
+
+WORKDIR /usr/src/
+
+COPY ./requirements/parsers_requirements.txt .
+RUN pip install --no-cache-dir -r parsers_requirements.txt
+
+COPY ./parsers/metallurg_moskva .
+
+CMD [ "scrapy", "crawl", "metallurg_moskva" ]
