@@ -35,7 +35,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8010/api/v1/recent?size=20&page=1",
+					"raw": "http://localhost:8010/api/v1/recent?size=20&page=1",
 					"protocol": "http",
 					"host": [
 						"127",
