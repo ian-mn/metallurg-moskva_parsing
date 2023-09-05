@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "9fb3e5a8-ce9f-4fdc-8197-4e7e6b2bed95",
+		"name": "Parsing tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12093624"
+	},
+	"item": [
+		{
+			"name": "Test request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Success answer\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Compare number of records\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData['size']).to.equal(20);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check first item\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData['items'][0][\"name\"]).to.equal(\"Арматура 6 А1 мотки Ст3\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8010/api/v1/recent?size=20&page=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8010",
+					"path": [
+						"api",
+						"v1",
+						"recent"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -47,5 +47,19 @@ services:
     networks:
     - parsing-network
 
+  newman:
+    image: postman/newman
+    command:
+      run test.json -k 
+      -r cli,json 
+      --reporter-json-export="reports/test.json"
+    volumes:
+      - ./postman:/etc/newman
+    depends_on:
+      parsers:
+        condition: service_completed_successfully
+    network_mode: 
+      "host"
+
 networks:
   parsing-network:
