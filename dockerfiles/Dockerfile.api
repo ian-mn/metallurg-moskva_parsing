@@ -9,6 +9,7 @@ COPY ./requirements/api_requirements.txt .
 RUN pip install --no-cache-dir -r api_requirements.txt
 
 COPY ./api/entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
 COPY ./api/src .
 
